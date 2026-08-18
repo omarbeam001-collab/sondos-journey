@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sondos — A Journey of Love</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@300;400;500;600&display=swap');
+
+  :root {
+    --blush: #f8e1e4;
+    --rose: #e8a0b4;
+    --deep-rose: #c76b8a;
+    --warm: #fdf0e0;
+    --gold: #d4a853;
+    --soft-purple: #c9b1d0;
+    --lavender: #e8ddf0;
+    --sage: #b8c9b1;
+    --sky: #c5dce8;
+    --cream: #fff9f0;
+    --text: #4a3548;
+    --text-light: #7a6578;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Lora', serif;
+    color: var(--text);
+    background: var(--cream);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── COVER SCREEN ─── */
+  #cover {
+    position: fixed; inset: 0;
+    background: linear-gradient(135deg, #fdf0e0 0%, #f8e1e4 40%, #e8ddf0 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 1000;
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+  #cover.hidden {
+    opacity: 0;
+    transform: scale(1.1);
+    pointer-events: none;
+  }
+  #cover .ornament {
+    width: 120px; height: 120px;
+    border: 2px solid var(--rose);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    animation: pulse-ring 3s ease-in-out infinite;
+    margin-bottom: 2rem;
+  }
+  #cover .ornament-inner {
+    font-size: 3rem;
+    animation: float 4s ease-in-out infinite;
+  }
+  #cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 600;
+    color: var(--deep-rose);
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  #cover .subtitle {
+    font-family: 'Quicksand', sans-serif;
+    font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+  #cover .from-line {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.85rem;
+    color: var(--rose);
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+  .begin-btn {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: white;
+    background: linear-gradient(135deg, var(--deep-rose), var(--rose));
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(199,107,138,0.35);
+    transition: all 0.3s ease;
+  }
+  .begin-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(199,107,138,0.45);
+  }
+
+  /* ─── FLOATING PARTICLES ─── */
+  .particles {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: drift linear infinite;
+  }
+
+  /* ─── STORY CONTAINER ─── */
+  #story {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 6rem;
+    opacity: 0;
+    transition: opacity 1s ease 0.5s;
+  }
+  #story.visible { opacity: 1; }
+
+  /* ─── CHAPTER ─── */
+  .chapter {
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .chapter.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .chapter-number {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700;
+    color: var(--deep-rose);
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+  }
+  .chapter-body p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    margin-bottom: 1.2rem;
+    color: var(--text);
+  }
+  .chapter-body p .highlight {
+    color: var(--deep-rose);
+    font-weight: 500;
+  }
+  .chapter-body p .gold {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* ─── SCENE VISUAL ─── */
+  .scene-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .scene-emoji {
+    font-size: 4rem;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+  }
+  .scene-ring {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .scene-ring::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    border: 2px dashed;
+    opacity: 0.4;
+    animation: spin-slow 20s linear infinite;
+  }
+  .trimester-1 .scene-ring { background: linear-gradient(135deg, #fdf0e0, #f8e1e4); }
+  .trimester-1 .scene-ring::before { border-color: var(--rose); }
+  .trimester-2 .scene-ring { background: linear-gradient(135deg, #e8ddf0, #c5dce8); }
+  .trimester-2 .scene-ring::before { border-color: var(--soft-purple); }
+  .trimester-3 .scene-ring { background: linear-gradient(135deg, #f8e1e4, #e8ddf0); }
+  .trimester-3 .scene-ring::before { border-color: var(--deep-rose); }
+
+  /* ─── INTERACTIVE CARDS ─── */
+  .flip-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .flip-card {
+    perspective: 800px;
+    height: 180px;
+    cursor: pointer;
+  }
+  .flip-card-inner {
+    position: relative;
+    width: 100%; height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+  .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  .flip-card-front, .flip-card-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 16px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .flip-card-front {
+    background: linear-gradient(135deg, white, var(--blush));
+    border: 1px solid rgba(232,160,180,0.3);
+    box-shadow: 0 4px 15px rgba(199,107,138,0.1);
+  }
+  .flip-card-front .card-emoji { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .flip-card-front .card-label {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+  }
+  .flip-card-front .tap-hint {
+    font-size: 0.65rem;
+    color: var(--rose);
+    margin-top: 0.5rem;
+    opacity: 0.7;
+  }
+  .flip-card-back {
+    background: linear-gradient(135deg, var(--deep-rose), var(--rose));
+    color: white;
+    transform: rotateY(180deg);
+  }
+  .flip-card-back .back-text {
+    font-family: 'Lora', serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ─── MILESTONE TIMELINE ─── */
+  .milestone-timeline {
+    position: relative;
+    padding-left: 2.5rem;
+    margin: 2rem 0;
+  }
+  .milestone-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--rose), var(--soft-purple), var(--gold));
+    border-radius: 2px;
+  }
+  .milestone {
+    position: relative;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.6s ease;
+  }
+  .milestone.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .milestone-dot {
+    position: absolute;
+    left: -2.15rem;
+    top: 0.3rem;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--rose);
+  }
+  .milestone-week {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 0.25rem;
+  }
+  .milestone-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  /* ─── FEELING WHEEL ─── */
+  .feeling-section {
+    margin: 2rem 0;
+    text-align: center;
+  }
+  .feeling-section .prompt {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+  }
+  .feeling-orbs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  .feeling-orb {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    font-size: 1.5rem;
+  }
+  .feeling-orb span {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 600;
+    margin-top: 0.25rem;
+    letter-spacing: 0.03em;
+  }
+  .feeling-orb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  }
+  .feeling-orb.selected {
+    border-color: var(--deep-rose);
+    transform: scale(1.15);
+    box-shadow: 0 4px 20px rgba(199,107,138,0.3);
+  }
+  .feeling-response {
+    margin-top: 1.25rem;
+    padding: 1.25rem;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid rgba(232,160,180,0.2);
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease;
+  }
+  .feeling-response.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── LETTER ─── */
+  .letter-container {
+    margin: 3rem 0;
+    position: relative;
+  }
+  .letter {
+    background: white;
+    padding: 2.5rem 2rem;
+    border-radius: 4px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    position: relative;
+    border-top: 4px solid var(--rose);
+  }
+  .letter::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, transparent 50%, var(--blush) 50%);
+    border-radius: 0 0 0 4px;
+  }
+  .letter p {
+    font-size: 1rem;
+    line-height: 1.9;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+  .letter .salutation {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--deep-rose);
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+  .letter .sign-off {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--deep-rose);
+    margin-top: 1.5rem;
+  }
+  .letter-seal {
+    position: absolute;
+    bottom: -20px; right: 30px;
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, var(--deep-rose), var(--rose));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(199,107,138,0.3);
+  }
+
+  /* ─── FINAL CHAPTER ─── */
+  .final-scene {
+    text-align: center;
+    margin: 3rem 0;
+  }
+  .baby-visual {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .baby-glow {
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(232,160,180,0.3) 50%, rgba(212,168,83,0.2) 100%);
+    display: flex; align-items: center; justify-content: center;
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+  .baby-glow .emoji { font-size: 4rem; }
+  .sparkle {
+    position: absolute;
+    font-size: 1rem;
+    animation: sparkle 2s ease-in-out infinite;
+  }
+  .sparkle:nth-child(2) { top: 5px; right: 10px; animation-delay: 0.3s; }
+  .sparkle:nth-child(3) { bottom: 10px; left: 5px; animation-delay: 0.7s; }
+  .sparkle:nth-child(4) { top: 20px; left: 0; animation-delay: 1.1s; }
+  .sparkle:nth-child(5) { bottom: 5px; right: 0; animation-delay: 1.5s; }
+
+  .final-message {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+    font-weight: 600;
+    color: var(--deep-rose);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .final-sub {
+    font-family: 'Lora', serif;
+    font-size: 1.05rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* ─── FOOTER ─── */
+  .story-footer {
+    text-align: center;
+    padding: 3rem 1rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(232,160,180,0.2);
+  }
+  .story-footer .hearts {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.5rem;
+  }
+  .story-footer p {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── PROGRESS BAR ─── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rose), var(--deep-rose), var(--gold));
+    z-index: 999;
+    transition: width 0.3s ease;
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* ─── NAV DOTS ─── */
+  #nav-dots {
+    position: fixed;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    z-index: 998;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  #nav-dots.visible { opacity: 1; }
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--rose);
+    opacity: 0.3;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+  }
+  .nav-dot.active {
+    opacity: 1;
+    transform: scale(1.4);
+    background: var(--deep-rose);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes pulse-ring {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.85; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes drift {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.3; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 30px rgba(232,160,180,0.3); }
+    50% { box-shadow: 0 0 60px rgba(232,160,180,0.5); }
+  }
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .flip-cards { grid-template-columns: 1fr 1fr; }
+    .flip-card { height: 150px; }
+    .feeling-orb { width: 65px; height: 65px; font-size: 1.2rem; }
+    .feeling-orb span { font-size: 0.5rem; }
+    #nav-dots { right: 0.75rem; }
+    .letter { padding: 1.5rem 1.25rem; }
+    .baby-glow { width: 140px; height: 140px; }
+    .baby-glow .emoji { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar" style="width:0%"></div>
+
+<!-- Navigation Dots -->
+<div id="nav-dots"></div>
+
+<!-- Floating Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- ═══════════ COVER ═══════════ -->
+<div id="cover">
+  <div class="ornament">
+    <div class="ornament-inner">🌸</div>
+  </div>
+  <h1>Dearest Sondos</h1>
+  <div class="subtitle">A Story of Love, Life & the Most Beautiful Journey</div>
+  <div class="from-line">— With all my love, Omer</div>
+  <button class="begin-btn" onclick="beginStory()">Begin the Journey</button>
+</div>
+
+<!-- ═══════════ STORY ═══════════ -->
+<div id="story">
+
+  <!-- CHAPTER 1: The Beginning -->
+  <div class="chapter" data-chapter="1">
+    <div class="chapter-number">Chapter One</div>
+    <div class="chapter-title">The Day Everything Changed</div>
+    <div class="scene-visual trimester-1">
+      <div class="scene-ring">
+        <div class="scene-emoji">✨</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <p>Some moments split time in two — there is the <span class="highlight">before</span>, and then there is the <span class="highlight">after</span>. The day you told me, Sondos, was one of those moments.</p>
+      <p>I remember the way your eyes held a universe of emotions — joy and fear and wonder, all swirling together like the most beautiful storm. In that single moment, our world expanded to make room for someone we hadn't met yet, but already loved more than words could hold.</p>
+      <p>Two lines on a test. A heartbeat on a screen. And just like that, we were no longer two — we were <span class="gold">three</span>.</p>
+    </div>
+  </div>
+
+  <!-- CHAPTER 2: First Trimester -->
+  <div class="chapter" data-chapter="2">
+    <div class="chapter-number">Chapter Two</div>
+    <div class="chapter-title">The Secret Garden</div>
+    <div class="scene-visual trimester-1">
+      <div class="scene-ring">
+        <div class="scene-emoji">🌱</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <p>The first weeks were our secret — a quiet miracle growing beneath your heart. A tiny seed, no bigger than a poppy, already rewriting every plan we'd ever made.</p>
+      <p>But the secret garden has its thorns. The mornings that betrayed you with nausea. The afternoons when exhaustion wrapped around you like a heavy blanket. The evenings when you'd look at me with tired eyes and say, <span class="highlight">"I just want to feel normal again."</span></p>
+      <p>And I wished I could carry it for you, Sondos. Every wave of nausea, every moment of doubt. But all I could do was hold your hand, bring you water, and remind you — <span class="gold">you are growing a whole human being</span>. That is the furthest thing from normal. That is extraordinary.</p>
+    </div>
+
+    <div class="flip-cards">
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-emoji">🤢</div>
+            <div class="card-label">Morning Sickness</div>
+            <div class="tap-hint">tap to reveal</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="back-text">Every wave of nausea was your body saying: "I'm building something incredible." You were so brave, even when you didn't feel brave.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-emoji">😴</div>
+            <div class="card-label">Exhaustion</div>
+            <div class="tap-hint">tap to reveal</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="back-text">You slept like you were moving mountains — because you were. Growing a life takes more energy than any mountain ever could.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-emoji">💗</div>
+            <div class="card-label">First Heartbeat</div>
+            <div class="tap-hint">tap to reveal</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="back-text">That tiny, rapid flutter — 150 beats per minute — was the most beautiful sound I've ever heard. Our baby's first hello.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 3: Second Trimester -->
+  <div class="chapter" data-chapter="3">
+    <div class="chapter-number">Chapter Three</div>
+    <div class="chapter-title">The Bloom</div>
+    <div class="scene-visual trimester-2">
+      <div class="scene-ring">
+        <div class="scene-emoji">🌺</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <p>Then came the bloom — that golden stretch of the second trimester when your body seemed to say, <span class="highlight">"I've got this."</span> The nausea faded like a bad dream, and in its place came something miraculous: <span class="gold">energy</span>.</p>
+      <p>Your belly began to show — a gentle curve that made my heart swell every time I saw it. You glowed, Sondos. People say that about pregnant women, but with you it was true. There was a light in you that hadn't been there before — or maybe it had, and now it just had more reason to shine.</p>
+      <p>And then — the first flutter. A tiny kick, like a small hello from the inside. You grabbed my hand and pressed it to your belly, and we waited... and waited... and then — <span class="highlight">there it was</span>. Our baby, saying "I'm here, and I'm already strong."</p>
+    </div>
+
+    <div class="milestone-timeline">
+      <div class="milestone" data-delay="0">
+        <div class="milestone-dot" style="background:var(--rose)"></div>
+        <div class="milestone-week">Week 16</div>
+        <div class="milestone-text">The first flutter — like butterflies dancing inside you</div>
+      </div>
+      <div class="milestone" data-delay="200">
+        <div class="milestone-dot" style="background:var(--soft-purple)"></div>
+        <div class="milestone-week">Week 20</div>
+        <div class="milestone-text">The anatomy scan — seeing our baby's perfect profile for the first time</div>
+      </div>
+      <div class="milestone" data-delay="400">
+        <div class="milestone-dot" style="background:var(--sage)"></div>
+        <div class="milestone-week">Week 24</div>
+        <div class="milestone-text">Viability day — the day we breathed a little easier</div>
+      </div>
+      <div class="milestone" data-delay="600">
+        <div class="milestone-dot" style="background:var(--sky)"></div>
+        <div class="milestone-week">Week 26</div>
+        <div class="milestone-text">The kicks got stronger — I could finally feel them too</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 4: How Are You Feeling? -->
+  <div class="chapter" data-chapter="4">
+    <div class="chapter-number">Interlude</div>
+    <div class="chapter-title">How Are You Feeling, Sondos?</div>
+    <div class="chapter-body">
+      <p>Pregnancy is not a straight road — it's a winding path through a landscape of emotions. Some days you feel like you could conquer the world; other days, the world feels too heavy. <span class="highlight">Both are okay. Both are beautiful.</span></p>
+    </div>
+
+    <div class="feeling-section">
+      <div class="prompt">Tap what resonates with you right now</div>
+      <div class="feeling-orbs">
+        <div class="feeling-orb" style="background:var(--blush)" onclick="selectFeeling(this, 'joy')">
+          😊
+          <span>Joyful</span>
+        </div>
+        <div class="feeling-orb" style="background:var(--lavender)" onclick="selectFeeling(this, 'anxious')">
+          😰
+          <span>Anxious</span>
+        </div>
+        <div class="feeling-orb" style="background:var(--warm)" onclick="selectFeeling(this, 'tired')">
+          😴
+          <span>Tired</span>
+        </div>
+        <div class="feeling-orb" style="background:var(--sky)" onclick="selectFeeling(this, 'grateful')">
+          🙏
+          <span>Grateful</span>
+        </div>
+        <div class="feeling-orb" style="background:rgba(212,168,83,0.2)" onclick="selectFeeling(this, 'strong')">
+          💪
+          <span>Strong</span>
+        </div>
+        <div class="feeling-orb" style="background:rgba(184,201,177,0.4)" onclick="selectFeeling(this, 'overwhelmed')">
+          🌊
+          <span>Overwhelmed</span>
+        </div>
+      </div>
+      <div class="feeling-response" id="feeling-response"></div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 5: Third Trimester -->
+  <div class="chapter" data-chapter="5">
+    <div class="chapter-number">Chapter Four</div>
+    <div class="chapter-title">The Long Goodnight</div>
+    <div class="scene-visual trimester-3">
+      <div class="scene-ring">
+        <div class="scene-emoji">🌙</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <p>The third trimester arrived like a long, deep breath before the biggest moment of our lives. Your belly was round and proud — a temple of life — and every movement inside was a reminder that our baby was running out of room and getting ready.</p>
+      <p>But the long goodnight was not without its trials. Sleep became a distant memory, replaced by a nightly game of finding the <span class="highlight">one comfortable position</span> — which lasted approximately ten minutes before the baby decided to practice gymnastics.</p>
+      <p>Your feet ached. Your back protested. Your heart burned with an intensity that had nothing to do with emotion and everything to do with acid reflux. And through it all, Sondos, you kept going. You painted the nursery. You folded tiny clothes. You read stories to a belly that kicked back in response.</p>
+      <p>Some nights I'd find you standing by the window, hand on your belly, staring at the moon. And I knew — you were already a mother. You had been one since the very beginning.</p>
+    </div>
+
+    <div class="flip-cards">
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-emoji">🦵</div>
+            <div class="card-label">Swollen Feet</div>
+            <div class="tap-hint">tap to reveal</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="back-text">Every step you took in those final weeks was a step closer to holding our baby. Your feet carried the weight of two — and they never gave up.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-emoji">🛏️</div>
+            <div class="card-label">Sleepless Nights</div>
+            <div class="tap-hint">tap to reveal</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="back-text">Those sleepless nights were practice — your body preparing for midnight feeds and 3 AM lullabies. You were already in training for the hardest, most beautiful job in the world.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-emoji">📦</div>
+            <div class="card-label">The Hospital Bag</div>
+            <div class="tap-hint">tap to reveal</div>
+          </div>
+          <div class="flip-card-back">
+            <div class="back-text">Packed and repacked three times. Tiny hat, tiny socks, tiny everything. Each item a promise: we're ready. We've been ready since the day we saw those two lines.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 6: The Letter -->
+  <div class="chapter" data-chapter="6">
+    <div class="chapter-number">Chapter Five</div>
+    <div class="chapter-title">A Letter to You</div>
+
+    <div class="letter-container">
+      <div class="letter">
+        <div class="salutation">My dearest Sondos,</div>
+        <p>I need you to know something, and I need you to really hear it: <strong>you are the strongest person I have ever known.</strong></p>
+        <p>I have watched you carry this child with a grace that leaves me speechless. Through the nausea and the tears, through the sleepless nights and the anxious thoughts, through the body that changed in ways you didn't choose — you never once stopped being extraordinary.</p>
+        <p>There were days you didn't feel beautiful. I know because I saw you look in the mirror and sigh. But Sondos, you have never been more beautiful than you are right now. Every stretch mark is a love letter written by your body to our child. Every sleepless night is a down payment on a lifetime of care.</p>
+        <p>Our baby doesn't know it yet, but they have already won the lottery of life — because they get <em>you</em> as a mother. And I get to witness the whole miracle unfold.</p>
+        <p>Thank you for choosing me for this journey. Thank you for trusting me with your heart and our child's. I promise to spend every day earning that trust.</p>
+        <div class="sign-off">Forever yours,<br>Omer ❤️</div>
+        <div class="letter-seal">♥</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 7: The Arrival -->
+  <div class="chapter" data-chapter="7">
+    <div class="chapter-number">Chapter Six</div>
+    <div class="chapter-title">And Then... You Arrived</div>
+
+    <div class="final-scene">
+      <div class="baby-visual">
+        <div class="baby-glow">
+          <div class="emoji">👶</div>
+        </div>
+        <div class="sparkle">✨</div>
+        <div class="sparkle">⭐</div>
+        <div class="sparkle">✨</div>
+        <div class="sparkle">💫</div>
+      </div>
+    </div>
+
+    <div class="chapter-body">
+      <p>The day came like all life-changing days do — unexpectedly, impossibly, and with a force that rearranged the stars themselves.</p>
+      <p>You were <span class="highlight">magnificent</span>, Sondos. Through every contraction, through every moment that pushed you to the edge of what you thought you could endure, you found more. More strength. More courage. More love. You reached deep into a place I didn't know existed and pulled out a kind of power that I will spend the rest of my life in awe of.</p>
+      <p>And then — a cry. The most beautiful, earth-shattering, world-rebuilding cry ever heard. Our baby was here. <span class="gold">Our baby was HERE.</span></p>
+      <p>They placed that tiny, perfect being on your chest, and the whole universe narrowed to the space between your heartbeat and theirs. Two hearts that had been sharing one body, finally meeting face to face.</p>
+      <p>You wept. I wept. And in that moment, every difficult day, every sleepless night, every moment of fear and doubt — it all made sense. It was all worth it. It was all leading <span class="highlight">here</span>.</p>
+    </div>
+
+    <div class="final-scene" style="margin-top:3rem">
+      <div class="final-message">Welcome to the world, little one.<br>Your mother is the bravest person you'll ever know.</div>
+      <div class="final-sub" style="margin-top:1.5rem">
+        And Sondos — you did it. Not just the delivery, but every single day before it. You grew a human being with your body, your love, and your unbreakable spirit. You are not just a mother. You are a <strong>miracle</strong>.
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="story-footer">
+    <div class="hearts">♥ ♥ ♥</div>
+    <p>A love letter to Sondos, from Omer</p>
+    <p style="margin-top:0.5rem; font-size:0.7rem; opacity:0.6;">This journey is yours. Every step, every tear, every joy — yours.</p>
+  </div>
+
+</div>
+
+<script>
+// ─── PARTICLES ───
+function createParticles() {
+  const container = document.getElementById('particles');
+  const colors = ['var(--rose)', 'var(--blush)', 'var(--soft-purple)', 'var(--gold)', 'var(--lavender)'];
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 8 + 4;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (Math.random() * 15 + 15) + 's';
+    p.style.animationDelay = (Math.random() * 20) + 's';
+    container.appendChild(p);
+  }
+}
+createParticles();
+
+// ─── BEGIN STORY ───
+function beginStory() {
+  document.getElementById('cover').classList.add('hidden');
+  setTimeout(() => {
+    document.getElementById('story').classList.add('visible');
+    document.getElementById('nav-dots').classList.add('visible');
+  }, 600);
+}
+
+// ─── FLIP CARDS ───
+function flipCard(card) {
+  card.classList.toggle('flipped');
+}
+
+// ─── FEELING WHEEL ───
+const feelingMessages = {
+  joy: "Your joy is the sunrise of this journey — it lights up everything it touches. Our baby is already so loved, and they can feel every ounce of your happiness.",
+  anxious: "Anxiety is just love wearing a disguise — it means you care so deeply that your heart can't hold it all. You're not alone in this, Sondos. Not for a single second.",
+  tired: "Rest is not a luxury; it's a love letter to yourself and our baby. You've been working harder than anyone knows. It's okay to slow down. It's okay to ask for help.",
+  grateful: "Gratitude is the quiet superpower of motherhood. In the midst of everything, you still find reasons to say 'thank you.' That's what makes you extraordinary.",
+  strong: "You ARE strong — stronger than you know, stronger than you give yourself credit for. You are literally building life. What could be stronger than that?",
+  overwhelmed: "Being overwhelmed doesn't mean you're failing — it means you're feeling everything at once because this matters so much to you. Take it one breath at a time. I'm right here."
+};
+
+function selectFeeling(orb, feeling) {
+  document.querySelectorAll('.feeling-orb').forEach(o => o.classList.remove('selected'));
+  orb.classList.add('selected');
+  const resp = document.getElementById('feeling-response');
+  resp.textContent = feelingMessages[feeling];
+  resp.classList.add('show');
+}
+
+// ─── SCROLL OBSERVER ───
+const chapters = document.querySelectorAll('.chapter');
+const milestones = document.querySelectorAll('.milestone');
+
+const chapterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Animate milestones within
+      const ms = entry.target.querySelectorAll('.milestone');
+      ms.forEach((m, i) => {
+        setTimeout(() => m.classList.add('visible'), i * 300);
+      });
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+chapters.forEach(ch => chapterObserver.observe(ch));
+
+// ─── PROGRESS BAR ───
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('progress-bar').style.width = progress + '%';
+
+  // Update nav dots
+  let activeIndex = 0;
+  chapters.forEach((ch, i) => {
+    const rect = ch.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.5) activeIndex = i;
+  });
+  document.querySelectorAll('.nav-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === activeIndex);
+  });
+});
+
+// ─── NAV DOTS ───
+chapters.forEach((ch, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot';
+  dot.title = `Chapter ${i + 1}`;
+  dot.onclick = () => ch.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('nav-dots').appendChild(dot);
+});
+</script>
+
+</body>
+</html>
