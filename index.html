@@ -536,6 +536,60 @@
     background: var(--deep-rose);
   }
 
+  /* ─── COUNTDOWN ─── */
+  .countdown-section {
+    text-align: center;
+    margin: 2rem 0;
+    padding: 2rem;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid rgba(232,160,180,0.2);
+    box-shadow: 0 4px 20px rgba(199,107,138,0.08);
+  }
+  .countdown-label {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  .countdown-grid {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .countdown-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--deep-rose);
+    line-height: 1;
+  }
+  .countdown-unit {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-top: 0.4rem;
+  }
+  .countdown-separator {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--rose);
+    opacity: 0.4;
+    align-self: flex-start;
+    margin-top: 0.3rem;
+  }
+
   /* ─── ANIMATIONS ─── */
   @keyframes pulse-ring {
     0%, 100% { transform: scale(1); opacity: 1; }
@@ -574,6 +628,8 @@
     .letter { padding: 1.5rem 1.25rem; }
     .baby-glow { width: 140px; height: 140px; }
     .baby-glow .emoji { font-size: 3rem; }
+    .countdown-number { font-size: 2rem; }
+    .countdown-grid { gap: 1rem; }
   }
 </style>
 </head>
@@ -594,7 +650,7 @@
     <div class="ornament-inner">🌸</div>
   </div>
   <h1>Dearest Sondos</h1>
-  <div class="subtitle">A Story of Love, Life & the Most Beautiful Journey</div>
+  <div class="subtitle">A Story of Where We've Been & Everything That's Coming</div>
   <div class="from-line">— With all my love, Omer</div>
   <button class="begin-btn" onclick="beginStory()">Begin the Journey</button>
 </div>
@@ -618,7 +674,7 @@
     </div>
   </div>
 
-  <!-- CHAPTER 2: First Trimester -->
+  <!-- CHAPTER 2: First Trimester (past) -->
   <div class="chapter" data-chapter="2">
     <div class="chapter-number">Chapter Two</div>
     <div class="chapter-title">The Secret Garden</div>
@@ -628,9 +684,10 @@
       </div>
     </div>
     <div class="chapter-body">
-      <p>The first weeks were our secret — a quiet miracle growing beneath your heart. A tiny seed, no bigger than a poppy, already rewriting every plan we'd ever made.</p>
+      <p>These first weeks have been our secret — a quiet miracle growing beneath your heart. A tiny seed, no bigger than a poppy, already rewriting every plan we'd ever made.</p>
       <p>But the secret garden has its thorns. The mornings that betrayed you with nausea. The afternoons when exhaustion wrapped around you like a heavy blanket. The evenings when you'd look at me with tired eyes and say, <span class="highlight">"I just want to feel normal again."</span></p>
       <p>And I wished I could carry it for you, Sondos. Every wave of nausea, every moment of doubt. But all I could do was hold your hand, bring you water, and remind you — <span class="gold">you are growing a whole human being</span>. That is the furthest thing from normal. That is extraordinary.</p>
+      <p>We've made it through the hardest part, my love. The first chapter is closing. And you were <span class="highlight">so brave</span> — even on the days you didn't feel brave at all.</p>
     </div>
 
     <div class="flip-cards">
@@ -673,41 +730,47 @@
     </div>
   </div>
 
-  <!-- CHAPTER 3: Second Trimester -->
+  <!-- CHAPTER 3: Second Trimester (future) -->
   <div class="chapter" data-chapter="3">
     <div class="chapter-number">Chapter Three</div>
-    <div class="chapter-title">The Bloom</div>
+    <div class="chapter-title">The Bloom That's Coming</div>
     <div class="scene-visual trimester-2">
       <div class="scene-ring">
         <div class="scene-emoji">🌺</div>
       </div>
     </div>
     <div class="chapter-body">
-      <p>Then came the bloom — that golden stretch of the second trimester when your body seemed to say, <span class="highlight">"I've got this."</span> The nausea faded like a bad dream, and in its place came something miraculous: <span class="gold">energy</span>.</p>
-      <p>Your belly began to show — a gentle curve that made my heart swell every time I saw it. You glowed, Sondos. People say that about pregnant women, but with you it was true. There was a light in you that hadn't been there before — or maybe it had, and now it just had more reason to shine.</p>
-      <p>And then — the first flutter. A tiny kick, like a small hello from the inside. You grabbed my hand and pressed it to your belly, and we waited... and waited... and then — <span class="highlight">there it was</span>. Our baby, saying "I'm here, and I'm already strong."</p>
+      <p>Just ahead of us lies the bloom — that golden stretch of the second trimester when your body will finally say, <span class="highlight">"I've got this."</span> The nausea will fade like a bad dream, and in its place will come something miraculous: <span class="gold">energy</span>.</p>
+      <p>Your belly will begin to show — a gentle curve that will make my heart swell every time I see it. People say pregnant women glow, but with you it will be different. There's already a light in you, Sondos — and soon it will have even more reason to shine.</p>
+      <p>And then — the moment I'm waiting for — the first flutter. A tiny kick, like a small hello from the inside. You'll grab my hand and press it to your belly, and we'll wait... and wait... and then — <span class="highlight">there it will be</span>. Our baby, saying "I'm here, and I'm already strong."</p>
+      <p>I can't wait for that moment. I can't wait to feel our baby move for the first time. I can't wait to see you smile that smile — the one that says everything is exactly as it should be.</p>
     </div>
 
     <div class="milestone-timeline">
       <div class="milestone" data-delay="0">
         <div class="milestone-dot" style="background:var(--rose)"></div>
-        <div class="milestone-week">Week 16</div>
-        <div class="milestone-text">The first flutter — like butterflies dancing inside you</div>
+        <div class="milestone-week">Week 14</div>
+        <div class="milestone-text">The nausea begins to fade — the worst is behind you</div>
       </div>
       <div class="milestone" data-delay="200">
         <div class="milestone-dot" style="background:var(--soft-purple)"></div>
-        <div class="milestone-week">Week 20</div>
-        <div class="milestone-text">The anatomy scan — seeing our baby's perfect profile for the first time</div>
+        <div class="milestone-week">Week 16</div>
+        <div class="milestone-text">The first flutter — like butterflies dancing inside you</div>
       </div>
       <div class="milestone" data-delay="400">
         <div class="milestone-dot" style="background:var(--sage)"></div>
-        <div class="milestone-week">Week 24</div>
-        <div class="milestone-text">Viability day — the day we breathed a little easier</div>
+        <div class="milestone-week">Week 20</div>
+        <div class="milestone-text">The anatomy scan — seeing our baby's perfect profile for the first time</div>
       </div>
       <div class="milestone" data-delay="600">
         <div class="milestone-dot" style="background:var(--sky)"></div>
+        <div class="milestone-week">Week 24</div>
+        <div class="milestone-text">Viability day — the day we'll breathe a little easier</div>
+      </div>
+      <div class="milestone" data-delay="800">
+        <div class="milestone-dot" style="background:var(--gold)"></div>
         <div class="milestone-week">Week 26</div>
-        <div class="milestone-text">The kicks got stronger — I could finally feel them too</div>
+        <div class="milestone-text">The kicks will get stronger — I'll finally be able to feel them too</div>
       </div>
     </div>
   </div>
@@ -715,7 +778,7 @@
   <!-- CHAPTER 4: How Are You Feeling? -->
   <div class="chapter" data-chapter="4">
     <div class="chapter-number">Interlude</div>
-    <div class="chapter-title">How Are You Feeling, Sondos?</div>
+    <div class="chapter-title">How Are You Feeling Right Now, Sondos?</div>
     <div class="chapter-body">
       <p>Pregnancy is not a straight road — it's a winding path through a landscape of emotions. Some days you feel like you could conquer the world; other days, the world feels too heavy. <span class="highlight">Both are okay. Both are beautiful.</span></p>
     </div>
@@ -752,20 +815,21 @@
     </div>
   </div>
 
-  <!-- CHAPTER 5: Third Trimester -->
+  <!-- CHAPTER 5: Third Trimester (future) -->
   <div class="chapter" data-chapter="5">
     <div class="chapter-number">Chapter Four</div>
-    <div class="chapter-title">The Long Goodnight</div>
+    <div class="chapter-title">The Long Goodnight Ahead</div>
     <div class="scene-visual trimester-3">
       <div class="scene-ring">
         <div class="scene-emoji">🌙</div>
       </div>
     </div>
     <div class="chapter-body">
-      <p>The third trimester arrived like a long, deep breath before the biggest moment of our lives. Your belly was round and proud — a temple of life — and every movement inside was a reminder that our baby was running out of room and getting ready.</p>
-      <p>But the long goodnight was not without its trials. Sleep became a distant memory, replaced by a nightly game of finding the <span class="highlight">one comfortable position</span> — which lasted approximately ten minutes before the baby decided to practice gymnastics.</p>
-      <p>Your feet ached. Your back protested. Your heart burned with an intensity that had nothing to do with emotion and everything to do with acid reflux. And through it all, Sondos, you kept going. You painted the nursery. You folded tiny clothes. You read stories to a belly that kicked back in response.</p>
-      <p>Some nights I'd find you standing by the window, hand on your belly, staring at the moon. And I knew — you were already a mother. You had been one since the very beginning.</p>
+      <p>Then will come the third trimester — a long, deep breath before the biggest moment of our lives. Your belly will be round and proud — a temple of life — and every movement inside will be a reminder that our baby is running out of room and getting ready.</p>
+      <p>But the long goodnight won't be without its trials. Sleep will become a distant memory, replaced by a nightly game of finding the <span class="highlight">one comfortable position</span> — which will last approximately ten minutes before the baby decides to practice gymnastics.</p>
+      <p>Your feet will ache. Your back will protest. Your heart will burn with an intensity that has nothing to do with emotion and everything to do with acid reflux. And through it all, Sondos, I know you'll keep going. You'll paint the nursery. You'll fold tiny clothes. You'll read stories to a belly that kicks back in response.</p>
+      <p>Some nights I'll find you standing by the window, hand on your belly, staring at the moon. And I'll know — you'll already be a mother. You've been one since the very beginning.</p>
+      <p>And when those hard nights come, I'll be right there. Rubbing your back. Fetching your cravings at 2 AM. Reminding you that every discomfort is a countdown to the most beautiful moment of our lives.</p>
     </div>
 
     <div class="flip-cards">
@@ -777,7 +841,7 @@
             <div class="tap-hint">tap to reveal</div>
           </div>
           <div class="flip-card-back">
-            <div class="back-text">Every step you took in those final weeks was a step closer to holding our baby. Your feet carried the weight of two — and they never gave up.</div>
+            <div class="back-text">When your feet swell and ache, remember — every step is a step closer to holding our baby. I'll be there to rub them every single night.</div>
           </div>
         </div>
       </div>
@@ -789,7 +853,7 @@
             <div class="tap-hint">tap to reveal</div>
           </div>
           <div class="flip-card-back">
-            <div class="back-text">Those sleepless nights were practice — your body preparing for midnight feeds and 3 AM lullabies. You were already in training for the hardest, most beautiful job in the world.</div>
+            <div class="back-text">Those sleepless nights will be practice — your body preparing for midnight feeds and 3 AM lullabies. And I'll be awake right beside you, every single time.</div>
           </div>
         </div>
       </div>
@@ -801,7 +865,7 @@
             <div class="tap-hint">tap to reveal</div>
           </div>
           <div class="flip-card-back">
-            <div class="back-text">Packed and repacked three times. Tiny hat, tiny socks, tiny everything. Each item a promise: we're ready. We've been ready since the day we saw those two lines.</div>
+            <div class="back-text">We'll pack and repack it three times. Tiny hat, tiny socks, tiny everything. Each item a promise: we're ready. We've been ready since the day we saw those two lines.</div>
           </div>
         </div>
       </div>
@@ -817,20 +881,21 @@
       <div class="letter">
         <div class="salutation">My dearest Sondos,</div>
         <p>I need you to know something, and I need you to really hear it: <strong>you are the strongest person I have ever known.</strong></p>
-        <p>I have watched you carry this child with a grace that leaves me speechless. Through the nausea and the tears, through the sleepless nights and the anxious thoughts, through the body that changed in ways you didn't choose — you never once stopped being extraordinary.</p>
-        <p>There were days you didn't feel beautiful. I know because I saw you look in the mirror and sigh. But Sondos, you have never been more beautiful than you are right now. Every stretch mark is a love letter written by your body to our child. Every sleepless night is a down payment on a lifetime of care.</p>
-        <p>Our baby doesn't know it yet, but they have already won the lottery of life — because they get <em>you</em> as a mother. And I get to witness the whole miracle unfold.</p>
-        <p>Thank you for choosing me for this journey. Thank you for trusting me with your heart and our child's. I promise to spend every day earning that trust.</p>
+        <p>I have watched you carry this child with a grace that leaves me speechless. Through the nausea and the tears, through the exhaustion and the anxious thoughts, through the body that changed in ways you didn't choose — you never once stopped being extraordinary.</p>
+        <p>And we're just getting started. There are harder days ahead — I won't pretend there aren't. But there are also days coming that will take your breath away. The first kick. The first time we see our baby's face on a screen. The first time you hold your belly and laugh because someone is having a party in there.</p>
+        <p>There will be days you won't feel beautiful. But Sondos, you have never been more beautiful than you are right now. Every change in your body is a love letter written to our child. Every sacrifice is a down payment on a lifetime of care.</p>
+        <p>Our baby doesn't know it yet, but they have already won the lottery of life — because they get <em>you</em> as a mother. And I get to walk every step of this road beside you.</p>
+        <p>Thank you for choosing me for this journey. Thank you for trusting me with your heart and our child's. I promise to spend every day earning that trust — through the easy days and the hard ones, through the sleepless nights and the first smiles, through it all.</p>
         <div class="sign-off">Forever yours,<br>Omer ❤️</div>
         <div class="letter-seal">♥</div>
       </div>
     </div>
   </div>
 
-  <!-- CHAPTER 7: The Arrival -->
+  <!-- CHAPTER 7: The Arrival (future vision) -->
   <div class="chapter" data-chapter="7">
     <div class="chapter-number">Chapter Six</div>
-    <div class="chapter-title">And Then... You Arrived</div>
+    <div class="chapter-title">The Day We're Waiting For</div>
 
     <div class="final-scene">
       <div class="baby-visual">
@@ -845,17 +910,38 @@
     </div>
 
     <div class="chapter-body">
-      <p>The day came like all life-changing days do — unexpectedly, impossibly, and with a force that rearranged the stars themselves.</p>
-      <p>You were <span class="highlight">magnificent</span>, Sondos. Through every contraction, through every moment that pushed you to the edge of what you thought you could endure, you found more. More strength. More courage. More love. You reached deep into a place I didn't know existed and pulled out a kind of power that I will spend the rest of my life in awe of.</p>
-      <p>And then — a cry. The most beautiful, earth-shattering, world-rebuilding cry ever heard. Our baby was here. <span class="gold">Our baby was HERE.</span></p>
-      <p>They placed that tiny, perfect being on your chest, and the whole universe narrowed to the space between your heartbeat and theirs. Two hearts that had been sharing one body, finally meeting face to face.</p>
-      <p>You wept. I wept. And in that moment, every difficult day, every sleepless night, every moment of fear and doubt — it all made sense. It was all worth it. It was all leading <span class="highlight">here</span>.</p>
+      <p>Someday soon — and sooner than we think — the day will come. It will arrive like all life-changing days do: unexpectedly, impossibly, and with a force that rearranges the stars themselves.</p>
+      <p>You will be <span class="highlight">magnificent</span>, Sondos. Through every contraction, through every moment that pushes you to the edge of what you think you can endure, you will find more. More strength. More courage. More love. You'll reach deep into a place you didn't know existed and pull out a kind of power that I will spend the rest of my life in awe of.</p>
+      <p>And then — a cry. The most beautiful, earth-shattering, world-rebuilding cry we'll ever hear. Our baby will be here. <span class="gold">Our baby will be HERE.</span></p>
+      <p>They'll place that tiny, perfect being on your chest, and the whole universe will narrow to the space between your heartbeat and theirs. Two hearts that have been sharing one body, finally meeting face to face.</p>
+      <p>You'll weep. I'll weep. And in that moment, every difficult day, every sleepless night, every moment of fear and doubt — it will all make sense. It will all be worth it. It will all have been leading <span class="highlight">here</span>.</p>
+      <p>That day is coming, Sondos. And until it does, I will hold your hand through every step, every kick, every tear, and every smile. Because this journey isn't just yours — it's <em>ours</em>. And the best is yet to come.</p>
+    </div>
+
+    <div class="countdown-section">
+      <div class="countdown-label">Counting Down To You</div>
+      <div class="countdown-grid" id="countdown-grid">
+        <div class="countdown-item">
+          <div class="countdown-number" id="cd-months">--</div>
+          <div class="countdown-unit">Months</div>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="cd-weeks">--</div>
+          <div class="countdown-unit">Weeks</div>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="cd-days">--</div>
+          <div class="countdown-unit">Days</div>
+        </div>
+      </div>
     </div>
 
     <div class="final-scene" style="margin-top:3rem">
-      <div class="final-message">Welcome to the world, little one.<br>Your mother is the bravest person you'll ever know.</div>
+      <div class="final-message">We can't wait to meet you, little one.<br>Your mother is the bravest person you'll ever know.</div>
       <div class="final-sub" style="margin-top:1.5rem">
-        And Sondos — you did it. Not just the delivery, but every single day before it. You grew a human being with your body, your love, and your unbreakable spirit. You are not just a mother. You are a <strong>miracle</strong>.
+        And Sondos — you will do it. Not just the delivery, but every single day before it and after it. You are growing a human being with your body, your love, and your unbreakable spirit. You are not just a mother. You are a <strong>miracle in the making</strong>.
       </div>
     </div>
   </div>
@@ -864,7 +950,7 @@
   <div class="story-footer">
     <div class="hearts">♥ ♥ ♥</div>
     <p>A love letter to Sondos, from Omer</p>
-    <p style="margin-top:0.5rem; font-size:0.7rem; opacity:0.6;">This journey is yours. Every step, every tear, every joy — yours.</p>
+    <p style="margin-top:0.5rem; font-size:0.7rem; opacity:0.6;">This journey is ours. Every step, every tear, every joy — ours.</p>
   </div>
 
 </div>
@@ -906,11 +992,11 @@ function flipCard(card) {
 // ─── FEELING WHEEL ───
 const feelingMessages = {
   joy: "Your joy is the sunrise of this journey — it lights up everything it touches. Our baby is already so loved, and they can feel every ounce of your happiness.",
-  anxious: "Anxiety is just love wearing a disguise — it means you care so deeply that your heart can't hold it all. You're not alone in this, Sondos. Not for a single second.",
-  tired: "Rest is not a luxury; it's a love letter to yourself and our baby. You've been working harder than anyone knows. It's okay to slow down. It's okay to ask for help.",
+  anxious: "Anxiety is just love wearing a disguise — it means you care so deeply that your heart can't hold it all. You're not alone in this, Sondos. Not for a single second. I'm right here.",
+  tired: "Rest is not a luxury; it's a love letter to yourself and our baby. You've been working harder than anyone knows. It's okay to slow down. It's okay to ask for help. That's what I'm here for.",
   grateful: "Gratitude is the quiet superpower of motherhood. In the midst of everything, you still find reasons to say 'thank you.' That's what makes you extraordinary.",
   strong: "You ARE strong — stronger than you know, stronger than you give yourself credit for. You are literally building life. What could be stronger than that?",
-  overwhelmed: "Being overwhelmed doesn't mean you're failing — it means you're feeling everything at once because this matters so much to you. Take it one breath at a time. I'm right here."
+  overwhelmed: "Being overwhelmed doesn't mean you're failing — it means you're feeling everything at once because this matters so much to you. Take it one breath at a time. I'm right here, and I'm not going anywhere."
 };
 
 function selectFeeling(orb, feeling) {
@@ -920,6 +1006,33 @@ function selectFeeling(orb, feeling) {
   resp.textContent = feelingMessages[feeling];
   resp.classList.add('show');
 }
+
+// ─── COUNTDOWN ───
+function updateCountdown() {
+  // Due date estimate: ~40 weeks from last period. End of first trimester = week 13.
+  // Assuming they're around week 13 now (Aug 18, 2026), due date ~late Nov / early Dec 2026
+  const dueDate = new Date('2026-12-05T00:00:00');
+  const now = new Date();
+  const diff = dueDate - now;
+
+  if (diff <= 0) {
+    document.getElementById('cd-months').textContent = '0';
+    document.getElementById('cd-weeks').textContent = '0';
+    document.getElementById('cd-days').textContent = '0';
+    return;
+  }
+
+  const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const months = Math.floor(totalDays / 30);
+  const remainingAfterMonths = totalDays - (months * 30);
+  const weeks = Math.floor(remainingAfterMonths / 7);
+  const days = remainingAfterMonths - (weeks * 7);
+
+  document.getElementById('cd-months').textContent = months;
+  document.getElementById('cd-weeks').textContent = weeks;
+  document.getElementById('cd-days').textContent = days;
+}
+updateCountdown();
 
 // ─── SCROLL OBSERVER ───
 const chapters = document.querySelectorAll('.chapter');
